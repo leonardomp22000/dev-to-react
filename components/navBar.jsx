@@ -1,6 +1,7 @@
+import Link from "next/link";
 export default function NavBar() {
   return (
-    <nav className="bg-white w-full h-14 fixed border-b border-[#E0E0E0] flex justify-between items-center">
+    <nav className="bg-white w-full h-14 fixed border-b border-[#E0E0E0] flex justify-between items-center ">
       <div className="flex w-4/5 my-1">
         <img
         className="w-[3.1rem] mx-4"
@@ -11,8 +12,8 @@ export default function NavBar() {
       </div>
 
       <div  className="flex justify-end w-1/5 gap-2 font-Helvetica" >
-        <a className=" h-10 content-center no-underline text-[#505050] text-base text-center rounded-lg w-1/3 hover:bg-[#EBECFC] hover:text-[#2F3DB4] hover:underline"  href=""> Log In </a>
-        <a className="h-10 content-center no-underline text-base text-center w-2/4 border border-[#4A57E1] rounded-md mr-6 text-[#4A57E1] hover:bg-[#3B49DF] hover:text-white hover:underline"  href="">Create account</a>
+        <Link className=" h-10 content-center no-underline text-[#505050] text-base text-center rounded-lg w-1/3 hover:bg-[#EBECFC] hover:text-[#2F3DB4] hover:underline"  href="/LogIn"> Log In </Link>
+        <Link className="h-10 content-center no-underline text-base text-center w-2/4 border border-[#4A57E1] rounded-md mr-6 text-[#4A57E1] hover:bg-[#3B49DF] hover:text-white hover:underline"  href="/CreateAccount">Create account</Link>
       </div>
     </nav>
   );
