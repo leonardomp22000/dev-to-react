@@ -14,6 +14,7 @@ export default function Home() {
   return (
     <main className="min-h-screen ">
       <section className="h-14">
+        
         <NavBar />
       </section>
 

@@ -1,4 +1,5 @@
 import { Advertisement } from "@/components/Advertisement";
+
 export function MainContent() {
   return (
     <section>
@@ -51,6 +52,8 @@ export function MainContent() {
             >
               Check out the prompt
             </a>
+
+ 
           </div>
         </div>
       </article>

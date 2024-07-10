@@ -14,7 +14,6 @@ export async function registration(name, email, password) {
         })
     })
     const json = await response.json()
-    const isSucces = json.success
-    return isSucces
+    return json.success
 }
 // https://apidevto.onrender.com/users

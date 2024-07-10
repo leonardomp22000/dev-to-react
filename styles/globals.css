@@ -10,9 +10,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --border-color: #F3F3F3;
+    --border-color-input: #D7D7D7;
+    --button-color: #3B49DF;
+    --text-button-color: #F9F9F9;
   }
 }
 

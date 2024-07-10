@@ -1,124 +1,105 @@
-import { registration } from "@/api";
 import { useForm } from "react-hook-form";
-import { Toaster } from "sonner";
-import { toast } from "sonner";
-import { clsx } from "clsx";
+import { registration } from "@/api";
+
 
 export default function CreateUserForm() {
-  const {
-    handleSubmit,
-    register,
-    formState: { errors },
-    setError,
-  } = useForm();
-
-  async function onSend(data) {
-    console.log("Entra en la funcion");
-    console.log(data);
+  const { register, handleSubmit } = useForm();
+  async function onSubmit(data) {
+ 
     try {
-      console.log(data);
-      const response = await registration(data);
-      if (response === true) {
-        toast.success("Usuario creado");
-        console.log("Success");
-      } else {
-        console.log("Algo paso");
-      }
-    } catch (error) {
-      toast.error("Error al crear usuario");
-      console.error("Login error", error);
-    }
-  }
-
-  return (
-    <main className="flex justify-center p-10 w-full  ">
+      const response = await registration(data.name, data.email, data.password);
       
-      <section className="p-8 bg-white w-2/5">
-        <h1 className="text-[Helvetica], text-lg font-semibold text-[#171726] mb-4">
-          Create your account
-        </h1>
+      if (response) {
+        // Apartados para sonner
+        console.log("Registrado correctamente");
+      }else{
+        // Apartado para sonner
+        console.log("Las credenciales ya estan en uso")
+      }
+      
+    } catch (error) {
+      console.error("Error al registrar: ", error)
+    }
+ 
+  }
+  return (
+    <main className="bg-white min-h-screen p-12 ">
+      <section className="flex justify-center">
+        <div className=" p-10 border border-[color:var(--border-color)] w-2/5 rounded-lg">
+          <h1 className="text-[Helvetica] font-bold mb-8 text-lg text-[#171717]">
+            Create your account
+          </h1>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-2"
+          >
+            <div className="flex flex-col gap-2">
+              <label htmlFor="name">Name</label>
+              <input
+                className="w-full p-2 border border-[color:var(--border-color-input)] rounded-lg"
+                type="text"
+                {...register("name", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+              />
+            </div>
 
-        <form onSubmit={handleSubmit(onSend)} action="">
-          <div className="flex flex-col w-full my-4">
-            {/* <label  htmlFor="name"> 
-              Nombre <span className="text-red-600 text-xs">*</span>{" "}
-            </label>
-            */}
-            <input
-              className="font-Helvetica text-base rounded-md px-4 border border-[#A3A3A3] focus:border-2 focus:border-[#0000FF] focus:outline-none p-1"
-              type="text "
+            <div className="flex flex-col gap-2">
+              <label htmlFor="email">Email</label>
+              <input
+                className="w-full p-2 border border-[color:var(--border-color-input)] rounded-lg"
+                type="email"
+                {...register("email", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+              />
+            </div>
 
-              {...register("name", {
-                required: {
-                  value: true,
-                  message: "Nombre de usuario requerido",
-                },
-              })}
-            />
-          </div>
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password">Password</label>
+              <input
+                className="w-full p-2 border border-[color:var(--border-color-input)] rounded-lg"
+                type="text"
+                {...register("password", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+              />
+            </div>
 
-          <div className="flex flex-col w-full my-4">
-            {/* <label className="" htmlFor="email">
-              Email <span className="text-red-600 text-xs">*</span>
-            </label>*/}
+            <div className="flex flex-col gap-2">
+              <label htmlFor="password-confirmation">
+                Password Confirmation
+              </label>
+              <input
+                className="w-full p-2 border border-[color:var(--border-color-input)] rounded-lg"
+                type="text"
+                {...register("pasword-confirmation", {
+                  required: {
+                    value: true,
+                    message: "El campo es requerido",
+                  },
+                })}
+              />
+            </div>
 
-            <input
-              className="font-Helvetica text-base rounded-md px-4 border border-[#A3A3A3] focus:border-2 focus:border-[#0000FF] focus:outline-none p-1"
-              type="text "
-              id="email"
-              {...register("email", {
-                required: {
-                  value: true,
-                  message: "email requerido",
-                },
-              })}
-            />
-          </div>
-          <div className="flex flex-col w-full my-4">
-            {/*  <label className="" htmlFor="password">
-              Password <span className="text-red-600 text-xs">*</span>
-            </label>*/}
-
-            <input
-              className="font-Helvetica text-base rounded-md px-4 border border-[#A3A3A3] focus:border-2 focus:border-[#0000FF] focus:outline-none p-1"
-              type="text "
-              id="password"
-              {...register("password", {
-                required: {
-                  value: true,
-                  message: "email requerido",
-                },
-              })}
-            />
-          </div>
-          <div className="flex flex-col w-full my-4">
-            {/*
-                <label className="" htmlFor="passwordConfirmation">
-              Password Confirmation{" "}
-              <span className="text-red-600 text-xs">*</span>
-            </label>
-             */}
-
-            <input
-              className="font-Helvetica text-base rounded-md px-4 border border-[#A3A3A3] focus:border-2 focus:border-[#0000FF] focus:outline-none p-1"
-              type="text "
-              id="passwordConfirmation"
-              {...register("passwordConfirmation", {
-                required: {
-                  value: true,
-                  message: "email requerido",
-                },
-              })}
-            />
-          </div>
-
-          <button type="submit"  className=" p-2 px-4 text-white bg-[#3B49DF] rounded-lg">
-            Sign Up
-          </button>
-          
-        </form>
-
-    
+            <div>
+              <input
+                className="p-2 px-5 bg-[color:var(--button-color)] rounded-lg text-[color:var(--text-button-color)] hover:bg-[#2F3AB2]"
+                type="submit"
+                value="submit"
+              />
+            </div>
+          </form>
+        </div>
       </section>
     </main>
   );
