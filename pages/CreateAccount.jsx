@@ -8,7 +8,11 @@ import {
 } from "@/components/SVGS";
 import { useState } from "react";
 import Link from "next/link";
+
+import { useRouter } from "next/router";
+
 export default function CreateAccount() {
+  const router = useRouter()
   const singUpOptions = [
     { icon: Apple(), text: "Sign up with Apple" },
     { icon: Facebook(), text: "Sign up with Facebook" },
@@ -74,9 +78,13 @@ export default function CreateAccount() {
 
           <p className="mb-16 text-[#242B32]">
             Already have an account?{" "}
-            <a className=" text-[#3B49DF]" href="#Registration">
+            {/*<Link className=" text-[#3B49DF]" href="/LogIn">
               Log In
-            </a>
+            </Link>*/}
+           
+
+            
+
           </p>
         </div>
       </div>

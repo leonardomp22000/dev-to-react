@@ -2,12 +2,16 @@ import { useForm } from "react-hook-form";
 import { registration } from "@/api";
 import clsx from "clsx";
 import { useState } from "react";
+import { useRouter } from "next/router";
+
 
 export default function CreateUserForm() {
+  const router = useRouter()
   const {
     register,
     watch,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   async function onSubmit(data) {
@@ -17,6 +21,9 @@ export default function CreateUserForm() {
       if (response) {
         // Apartados para sonner
         console.log("Registrado correctamente");
+        reset()
+        router.push('/Login')
+        
       } else {
         // Apartado para sonner
         console.log("Las credenciales ya estan en uso");
@@ -28,7 +35,7 @@ export default function CreateUserForm() {
   const password = watch("password");
 
   // Updating the screen with a past event or the logical order
-  const [showHidePass, setShowHidePass] = useState(false);
+  const [showHidePass, setShowHidePass] = useState(true);
   function handleVisiblePassword() {
     setShowHidePass(!showHidePass);
   }
@@ -180,7 +187,7 @@ export default function CreateUserForm() {
               <input
                 className="p-2 px-5 bg-[color:var(--button-color)] rounded-lg text-[color:var(--text-button-color)] hover:bg-[#2F3AB2]"
                 type="submit"
-                value="submit"
+                value="submit"   
               />
             </div>
           </form>
