@@ -22,7 +22,7 @@ export default function CreateUserForm() {
         // Apartados para sonner
         console.log("Registrado correctamente");
         reset()
-        router.push('/Login')
+        router.push('/LogIn')
         
       } else {
         // Apartado para sonner

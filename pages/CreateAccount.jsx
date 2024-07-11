@@ -9,10 +9,7 @@ import {
 import { useState } from "react";
 import Link from "next/link";
 
-import { useRouter } from "next/router";
-
 export default function CreateAccount() {
-  const router = useRouter()
   const singUpOptions = [
     { icon: Apple(), text: "Sign up with Apple" },
     { icon: Facebook(), text: "Sign up with Facebook" },
@@ -50,12 +47,14 @@ export default function CreateAccount() {
                   {option.text}
                 </span>
               </div>
-             
             );
           })}
           <div className="cursor-pointer p-4 flex m-2 w-full border  border-[#D4D4D4] rounded-lg text-[Helvetica] font-normal text-sm hover:bg-[#F5F5F5]">
             {Email()}
-            <Link className="flex justify-center items-center w-full" href="/CreateUserForm">
+            <Link
+              className="flex justify-center items-center w-full"
+              href="/CreateUserForm"
+            >
               Sign Up with email
             </Link>
           </div>
@@ -78,13 +77,9 @@ export default function CreateAccount() {
 
           <p className="mb-16 text-[#242B32]">
             Already have an account?{" "}
-            {/*<Link className=" text-[#3B49DF]" href="/LogIn">
+            <Link className=" text-[#3B49DF]" href="/LogIn">
               Log In
-            </Link>*/}
-           
-
-            
-
+            </Link>
           </p>
         </div>
       </div>

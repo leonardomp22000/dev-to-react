@@ -1,3 +1,7 @@
+import { useForm } from "react-hook-form";
+import clsx from "clsx";
+import { useState } from "react";
+import { useRouter } from "next/router";
 import {
   Apple,
   Email,
@@ -6,8 +10,44 @@ import {
   GitHub,
   Google,
 } from "@/components/SVGS";
+import { logIn } from "@/api";
 
 export default function LogIn() {
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
+
+  const [showHidePass, setShowHidePass] = useState(true);
+
+  async function onSubmit(data) {
+    try {
+      const token = await logIn(data.email, data.password);
+      console.log(token);
+      window.localStorage.setItem("token", token);
+      if (token) {
+        window.localStorage.setItem("token", token);
+        console.log("Bienvenido"); // Linea de toast
+        router.push("/");
+      } else {
+        console.log("Usuario o contraseña incorrectos"); // linea toast
+        setError("root.credentials", {
+          type: "manual",
+          message: "Credenciales invalidas",
+        });
+      }
+    } catch (error) {
+      console.log("Error al iniciar sesion"); // linea toast
+      console.error("No se puede ingresar : ", error);
+    }
+  }
+
+  function handleVisiblePassword() {
+    setShowHidePass(!showHidePass);
+  }
   const singUpOptions = [
     { icon: Apple(), text: "Continue with Apple" },
     { icon: Facebook(), text: "Continue with Facebook" },
@@ -47,27 +87,74 @@ export default function LogIn() {
               </div>
             );
           })}
-         
 
-         
           <section className="w-full mt-10">
             {" "}
             <div className="w-full mb-3 ">
-              <form className="flex flex-col w-full" action="">
+              <form
+                className={clsx("flex flex-col w-full", {
+                  " bg-slate-100 rounded-lg": errors.root?.credentials,
+                })}
+                onSubmit={handleSubmit(onSubmit)}
+              >
                 <div>
-                  <p>Email</p>
+                  <label htmlFor="email">Email</label>
                   <input
-                    className=" border  border-[#D4D4D4] rounded-lg w-full p-2"
+                    className={clsx(
+                      " border  border-[#D4D4D4] rounded-lg w-full p-2",
+                      { "bg-red-100 border-red-400": errors.email }
+                    )}
                     type="email"
+                    {...register("email", {
+                      required: {
+                        value: true,
+                        message: "Campo requerido",
+                      },
+                      pattern: {
+                        value: /[^@ \t\r\n]+@[^@ \t\r\n]+\.[^@ \t\r\n]+/,
+                        message: "Ingrese un correo valido",
+                      },
+                    })}
                   />
                 </div>
+
+                {errors.email && (
+                  <p className="text-red-600">{errors.email?.message}</p>
+                )}
                 <div>
-                  <p>Password</p>
+                  <label htmlFor="password">Password</label>
                   <input
-                    className=" border  border-[#D4D4D4] rounded-lg w-full p-2"
-                    type="text"
+                    className={clsx(
+                      " border  border-[#D4D4D4] rounded-lg w-full p-2",
+                      { "bg-red-100 border-red-400": errors.password }
+                    )}
+                    type={showHidePass ? "password" : "text"}
+                    id="password"
+                    {...register("password", {
+                      required: {
+                        value: true,
+                        message: "Campo requerido",
+                      },
+                      minLength: {
+                        value: 6,
+                        message:
+                          "La contraseña debe contener al menos 6 caracteres",
+                      },
+                    })}
                   />
                 </div>
+                {errors.password && (
+                  <p className="text-red-600">{errors.password?.message}</p>
+                )}
+
+                <span
+                  className="p-1 m-2 rounded-lg hover:bg-[#2F3AB2] bg-[#3B49DF] text-sm text-[#F9CCD2] w-1/4 text-center
+                "
+                  onClick={handleVisiblePassword}
+                >
+                  {" "}
+                  {showHidePass ? "Mostrar" : "Ocultar"} contraseña
+                </span>
                 <div className="flex justify-between">
                   <span>
                     <input type="checkbox" /> Remember me{" "}
@@ -78,11 +165,13 @@ export default function LogIn() {
                   </a>
                 </div>
 
-                <button className="w-full bg-[#3B49DF] hover:bg-[#2F3AB2] p-4 rounded-lg my-6 text-[#F9CCD2]">
+                <button
+                  type="submit"
+                  className="w-full bg-[#3B49DF] hover:bg-[#2F3AB2] p-4 rounded-lg my-6 text-[#F9CCD2]"
+                >
                   Log In
                 </button>
               </form>
-              <p></p>
             </div>
           </section>
 
@@ -101,10 +190,13 @@ export default function LogIn() {
                 code of conduct.
               </a>{" "}
             </p>
-
-            
           </div>
-          <p className=" mb-20">New to DEV Community? <a className="text-[#3B49DF]" href="#">Create account</a></p>
+          <p className=" mb-20">
+            New to DEV Community?{" "}
+            <a className="text-[#3B49DF]" href="#">
+              Create account
+            </a>
+          </p>
         </div>
       </div>
     </main>
