@@ -1,9 +1,15 @@
 import { Advertisement } from "@/components/Advertisement";
+import { ButtonsTop } from "./ButtonsTop";
+import WelcomeCard from "./WelcomeCard";
 
 export function MainContent() {
   return (
     <section>
+      <WelcomeCard />
+      <ButtonsTop />
       <article className="w-full  bg-white rounded-md pt-5 p-5 min-h-screen">
+        
+        
         <div className=" flex justify-between">
           <span className="text-[#525252] text-sm ">
             👋 The next DEV Challenge is live
@@ -52,13 +58,11 @@ export function MainContent() {
             >
               Check out the prompt
             </a>
-
- 
           </div>
         </div>
       </article>
       <article className=" mt-4">
-      <Advertisement/>
+        <Advertisement />
       </article>
     </section>
   );

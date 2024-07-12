@@ -8,6 +8,7 @@ import { ButtonsTop } from "@/components/ButtonsTop";
 import { MainContent } from "@/components/MainContent";
 import { DiscussCardAside } from "@/components/DiscussCardAside";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
@@ -25,7 +26,8 @@ export default function Home() {
           <OtherCard />
         </aside>
         <main className="w-[55%] ">
-          <ButtonsTop />
+
+          
           <MainContent />
         </main>
         <aside className="w-[26%] ">
